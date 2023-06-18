@@ -1,0 +1,13 @@
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;">
+  <div style="text-align: center;">
+    <h1>New post</h1>
+  </div>
+
+  <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin-bottom: 20px;">
+    <%= render "form", post: @post %>
+  </div>
+
+  <div>
+    <%= link_to "Back to posts", posts_path, class: "btn btn-secondary" %>
+  </div>
+</div>

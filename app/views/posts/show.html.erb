@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Post Details</div>
+
+        <div class="card-body">
+          <p style="color: green;"><%= notice %></p>
+
+          <%= render @post %>
+
+          <p>
+            <% if @post.image.attached? %>
+              <%= image_tag @post.image, style: "max-width: 200px; max-height: 200px;" %>
+            <% end %>
+          </p>
+        </div>
+
+        <div class="card-footer">
+          <%= link_to "Edit this post", edit_post_path(@post), class: "btn btn-primary" %>
+          <%= link_to "Back to posts", posts_path, class: "btn btn-secondary" %>
+
+          <% if @post.user == current_user %>
+            <%= button_to "Destroy this post", @post, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Post Actions</div>
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <form action="/like" method="post">
+                <%= csrf_meta_tags %>
+                <input type="hidden" name="post_id" value="<%= @post.id %>">
+                <button type="submit" class="btn btn-primary btn-block">
+                  <i class="fas fa-heart"></i> Like
+                  <span class="ml-1"><%= @post.likes.count %> Likes</span>
+                </button>
+              </form>
+            </div>
+            <div class="col-md-6">
+              <form action="/comment" method="post">
+                <%= csrf_meta_tags %>
+                <input type="hidden" name="post_id" value="<%= @post.id %>">
+                <input type="hidden" name="current_user_id" value="<%= current_user.id %>">
+                <input type="text" name="commentText" class="comment-input">
+                <button type="submit" class="btn btn-primary">Comment</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <% @post.comments.each do |comment| %>
+            <div class="row">
+              <div class="col-md-6">
+                <b><%= User.where(id: Comment.where(id: comment.id).take(1)[0]&.users_id).take(1)[0]&.NickName %></b> | <%= comment.commentTime.strftime("%Y-%m-%d %H:%M") %>
+              </div>
+              <div class="col-md-4">
+                <%= comment.commentText %>
+              </div>
+              <% if comment.users_id == current_user.id %>
+                <form action="/deleteComment" method="post">
+                  <%= csrf_meta_tags %>
+                  <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                  <input type="hidden" name="_method" value="delete">
+                  <button type="submit" class="btn btn-delete-comment">Delete comment</button>
+                </form>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  text: MyText
+  postTime: 2023-06-07 22:00:41
+  imagePost: MyString
+  user: one
+
+two:
+  title: MyString
+  text: MyText
+  postTime: 2023-06-07 22:00:41
+  imagePost: MyString
+  user: two

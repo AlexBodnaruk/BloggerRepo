@@ -1,0 +1,22 @@
+<div id="<%= dom_id post %>">
+  <p>
+    <strong>Title:</strong>
+    <%= post.title %>
+  </p>
+
+  <p>
+    <strong>Text:</strong>
+    <%= post.text %>
+  </p>
+
+  <p>
+    <strong>Posttime:</strong>
+    <%= post.postTime.strftime("%Y-%m-%d %H:%M:%S") %>
+  </p>
+
+  <p>
+    <strong>Author:</strong>
+    <%= User.where(id: post.user_id)[0].NickName %>
+  </p>
+
+</div>
